@@ -12,7 +12,7 @@ class ComicsController extends Controller
      */
     public function index()
     {
-        return view('comics.index', ['comics' => Comics::orderByDesc('id')]);
+        return view('comics.index', ['comics' => Comics::orderByDesc('id')->paginate(8)]);
     }
 
     /**
