@@ -20,6 +20,7 @@
             {{-- header --}}
             <div class="col-12 px-4 mb-4">
                 <h3>Current DC Comics archive</h3>
+                <a class="btn btn-primary" href="{{route('comics.create')}}">Add</a>
             </div>
             <div class="table-responsive">
               <table class="table">
