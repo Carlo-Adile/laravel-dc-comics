@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row py-4">
             <div class="col-2 py-4">
-                <img src="{{ $comic->thumb }}" alt="">
+                <img src="{{ $comic->thumb }}" alt="" width="100%" height="auto">
             </div>
             <div class="col">
                 <h2>{{ $comic['title'] }} </h2>

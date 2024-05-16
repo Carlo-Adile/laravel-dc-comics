@@ -12,7 +12,7 @@ class ComicsController extends Controller
      */
     public function index()
     {
-        return view('comics.index', ['comics' => Comics::orderByDesc('id')->paginate(8)]);
+        return view('comics.index', ['comics' => Comics::orderByDesc('id')->paginate()]);
     }
 
     /**
@@ -28,7 +28,16 @@ class ComicsController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        $data = $request->validate([
+            'title' => 'required|min:3|max:200',
+            'description' => 'required|min:20|max:500',
+            'thumb' => 'required|max:500',
+            'price' => 'required|min:2|max:6',
+            'series' => 'required|min:5|max:100',
+            'sale_date' => 'required',
+            'type' => 'required|min:3|max:50'
+            ]);
+            
 
         $comic = new Comics();
         $comic->title = $data['title'];
@@ -54,24 +63,47 @@ class ComicsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Comics $comics)
+    public function edit(Comics $comic)
     {
-        //
+        return view('comics.edit', compact('comic'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Comics $comics)
+    public function update(Request $request, Comics $comic)
     {
-        //
+        /* $data = $request->all(); */
+
+        $data = $request->validate([
+            'title' => 'required|min:3|max:200',
+            'description' => 'required|min:20|max:500',
+            'thumb' => 'required|max:500',
+            'price' => 'required|min:2|max:6',
+            'series' => 'required|min:5|max:100',
+            'sale_date' => 'required',
+            'type' => 'required|min:3|max:50'
+            ]);
+
+        $comic->title = $data['title'];
+        $comic->description = $data['description'];
+        $comic->thumb = $data['thumb'];
+        $comic->price = $data['price'];
+        $comic->series = $data['series'];
+        $comic->sale_date = $data['sale_date'];
+        $comic->type = $data['type'];
+        $comic->save();
+
+        return redirect()->route('comics.show', $comic->id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comics $comics)
+    public function destroy(Comics $comic)
     {
-        //
+        $comic->delete();
+
+        return redirect()->route('comics.index');
     }
 }
